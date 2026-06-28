@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\HomeController;
-    
+use App\Http\Controllers\Admin\UserJobController;
+use App\Http\Controllers\Admin\AppealController;
+use App\Http\Controllers\Employer\JobController;
+
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -53,4 +56,23 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/jobs', [UserJobController::class, 'index'])->name('jobs.index');
+    Route::get('/jobs/{job}', [UserJobController::class, 'show'])->name('jobs.show');
+    Route::delete('/jobs/{job}', [UserJobController::class, 'destroy'])->name('jobs.destroy');
+
+    Route::get('/appeals', [AppealController::class, 'index'])->name('appeals.index');
+    Route::get('/appeals/{appeal}', [AppealController::class, 'show'])->name('appeals.show');
+    Route::put('/appeals/{appeal}', [AppealController::class, 'update'])->name('appeals.update');
+});
+
+// Protect the routes using standard authentication middleware
+Route::middleware(['auth'])->prefix('employer')->name('employer.')->group(function () {
+    
+    // Form to create a new job vacancy listing
+    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+    
+    // Endpoint processing the form submission & communicating with the Flask ML microservice
+    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+    
 });

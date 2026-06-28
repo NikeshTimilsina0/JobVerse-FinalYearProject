@@ -12,15 +12,27 @@ class UserJob extends Model
     protected $table = 'user_jobs';
 
     protected $fillable = [
-        'employer_id', 'title', 'description', 'requirements', 
-        'salary_range', 'location', 'fraud_score', 'is_fraud', 
-        'is_visible', 'admin_override'
-    ];
+        'employer_id', 
+        'title', 
+        'description', 
+        'requirements', 
+        'salary_range', 
+        'location', 
+        'work_setting',
+        'telecommuting',
+        'has_questions',
+        'fraud_score', 
+        'is_fraud', 
+        'is_visible', 
+        'admin_override'
+    ];  
 
     protected $casts = [
         'is_fraud' => 'boolean',
         'is_visible' => 'boolean',
         'admin_override' => 'boolean',
+        'telecommuting' => 'boolean',
+        'has_questions' => 'boolean',
         'fraud_score' => 'float',
     ];
 
@@ -34,7 +46,7 @@ class UserJob extends Model
         return $this->hasMany(JobApplication::class, 'job_id');
     }
 
-    public function appeal(): HasOne
+    public function appeal(): HasOne 
     {
         return $this->hasOne(JobAppeal::class, 'job_id');
     }

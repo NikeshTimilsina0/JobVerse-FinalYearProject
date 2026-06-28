@@ -56,6 +56,19 @@
                 <p>User</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.jobs.index') }}" class="nav-link {{ request()->routeIs('admin.jobs.*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon text-danger"></i>
+                <p>Flagged Jobs</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.appeals.index') }}" class="nav-link {{ request()->routeIs('admin.appeals.*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon text-warning"></i>
+                <p>Appeals Queue</p>
+              </a>
+            </li> 
           </ul>
         </li>
         @endrole

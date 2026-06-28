@@ -16,10 +16,18 @@ return new class extends Migration
             $table->text('requirements')->nullable();
             $table->string('salary_range')->nullable();
             $table->string('location')->nullable();
+            
+            // Operational features seen by job-seekers
+            $table->string('work_setting')->default('Onsite'); // Onsite, Remote, Hybrid
+            $table->boolean('telecommuting')->default(false);  // Auto-calculated for the ML pipeline
+            $table->boolean('has_questions')->default(false);   // Screener check selection
+
+            // ML Engine evaluation data storage 
             $table->decimal('fraud_score', 5, 4)->default(0.0000);
             $table->boolean('is_fraud')->default(false);
             $table->boolean('is_visible')->default(true);
             $table->boolean('admin_override')->default(false);
+            
             $table->timestamps();
         });
     }
