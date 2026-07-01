@@ -8,6 +8,10 @@ use App\Http\Controllers\Admin\UserJobController;
 use App\Http\Controllers\Admin\AppealController;
 use App\Http\Controllers\Employer\JobController;
 
+use App\Http\Controllers\Employer\EmployerDashboardController;
+use App\Http\Controllers\Employer\EmployerJobController;
+use App\Http\Controllers\Employer\EmployerApplicationController;
+use App\Http\Controllers\Employer\EmployerAppealController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -66,13 +70,26 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/appeals/{appeal}', [AppealController::class, 'update'])->name('appeals.update');
 });
 
-// Protect the routes using standard authentication middleware
-Route::middleware(['auth'])->prefix('employer')->name('employer.')->group(function () {
-    
-    // Form to create a new job vacancy listing
-    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
-    
-    // Endpoint processing the form submission & communicating with the Flask ML microservice
-    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
-    
+
+Route::middleware(['auth', 'role:Employer'])
+    ->prefix('employer')
+    ->name('employer.')
+    ->group(function () {
+        
+        // Command Center Terminal
+        Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
+
+        // Job Vacancy Management Pipeline
+        Route::get('/jobs', [EmployerJobController::class, 'index'])->name('jobs.index');
+        Route::get('/jobs/create', [EmployerJobController::class, 'create'])->name('jobs.create');
+        Route::post('/jobs', [EmployerJobController::class, 'store'])->name('jobs.store');
+
+        // Applicant Lifecycle Pipeline
+        Route::get('/applications', [EmployerApplicationController::class, 'index'])->name('applications.index');
+        Route::get('/applications/{application}', [EmployerApplicationController::class, 'show'])->name('applications.show');
+        Route::post('/applications/{application}/status', [EmployerApplicationController::class, 'updateStatus'])->name('applications.status');
+
+        // ML False Positive Appeals Engine
+        Route::get('/jobs/{job}/appeal', [EmployerAppealController::class, 'create'])->name('appeals.create');
+        Route::post('/jobs/{job}/appeal', [EmployerAppealController::class, 'store'])->name('appeals.store');
 });

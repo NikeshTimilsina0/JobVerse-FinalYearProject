@@ -10,7 +10,6 @@ class UserJobController extends Controller
 {
     public function index()
     {
-        // Admin only manages non-legit (fraudulent) jobs
         $jobs = UserJob::where('is_fraud', true)->with('employer')->latest()->get();
         return view('admin.user_jobs.index', compact('jobs'));
     }
