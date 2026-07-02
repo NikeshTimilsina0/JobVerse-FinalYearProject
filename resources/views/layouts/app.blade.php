@@ -21,14 +21,17 @@
                         <a class="nav-link {{ Request::is('/') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('jobs*') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="#">All Jobs</a>
+                        <a class="nav-link {{ Request::is('/employer/dashboard') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('/employer/jobs') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.jobs.index') }}">Your Jobs</a>
                     </li>
                 </ul>
                 <div class="d-flex gap-2 align-items-center">
                     @auth
                         <span class="text-secondary small me-2">Hi, <strong>{{ Auth::user()->name }}</strong></span>
                         <a href="{{ route('employer.jobs.create') }}" class="btn btn-primary fw-semibold">Post a Job</a>
-                        <form action="#" method="POST" class="d-inline">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-outline-secondary fw-semibold">Sign Out</button>
                         </form>

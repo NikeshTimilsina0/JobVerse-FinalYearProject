@@ -12,7 +12,7 @@ class EmployerApplicationController extends Controller
     public function index()
     {
         $employerId = Auth::id();
-        $applications = JobApplication::whereHas('job', function($q) use ($employerId) {
+        $applications = JobApplication::whereHas('userJob', function($q) use ($employerId) {
             $q->where('employer_id', $employerId);
         })->with(['job', 'user'])->latest()->get();
 
