@@ -15,29 +15,69 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                    
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('/') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/employer/dashboard') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.dashboard') }}">Dashboard</a>
+                        <a class="nav-link {{ Request::is('jobs') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('jobs.index') }}">Find Jobs</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/employer/jobs') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.jobs.index') }}">Your Jobs</a>
-                    </li>
+
+                    @hasrole('Employer')
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('employer/dashboard') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('employer/jobs*') && !Request::is('employer/jobs/create') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.jobs.index') }}">Your Jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('employer/applications*') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.applications.index') }}">Applicants</a>
+                        </li>
+                    @endhasrole
+
+                    @auth
+                        @if(!auth()->user()->hasRole('Employer'))
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('my-applications') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('candidate.applications') }}">My Applications</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('profile*') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('profile.edit') }}">My Profile</a>
+                            </li>
+                        @endif
+                    @endauth
+
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about') }}">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
+                        </li>
+                    @endguest
+
                 </ul>
+
                 <div class="d-flex gap-2 align-items-center">
                     @auth
                         <span class="text-secondary small me-2">Hi, <strong>{{ Auth::user()->name }}</strong></span>
-                        <a href="{{ route('employer.jobs.create') }}" class="btn btn-primary fw-semibold">Post a Job</a>
+                        
+                        @hasrole('Employer')
+                            <a href="{{ route('employer.jobs.create') }}" class="btn btn-primary fw-semibold btn-sm px-3">Post a Job</a>
+                        @endhasrole
+
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-outline-secondary fw-semibold">Sign Out</button>
+                            <button type="submit" class="btn btn-outline-secondary fw-semibold btn-sm">Sign Out</button>
                         </form>
                     @else
-                        <a href="#" class="btn btn-outline-primary fw-semibold">Sign in</a>
-                        <a href="#" class="btn btn-primary fw-semibold">Employers / Post Job</a>
+                        <a href="/login" class="btn btn-outline-primary fw-semibold btn-sm">Sign in</a>
+                                            @hasrole('Employer')
+
+                        <a href="/register" class="btn btn-primary fw-semibold btn-sm">Employers / Post Job</a>
+                        @endhasrole
                     @endauth
                 </div>
             </div>

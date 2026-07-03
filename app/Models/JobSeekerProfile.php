@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class JobSeekerProfile extends Model
 {
     protected $fillable = [
-        'user_id', 'avatar', 'phone', 'github_url', 'linkedin_url', 
-        'summary', 'skills', 'experiences', 'education', 'cv_path', 
-        'current_title', 'availability'
+        'user_id', 'current_title', 'phone', 'availability', 
+        'github_url', 'linkedin_url', 'summary', 'skills', 
+        'experiences', 'education', 'cv_path'
     ];
 
     protected $casts = [

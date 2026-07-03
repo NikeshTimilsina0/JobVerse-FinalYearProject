@@ -12,15 +12,16 @@ use App\Http\Controllers\Employer\EmployerDashboardController;
 use App\Http\Controllers\Employer\EmployerJobController;
 use App\Http\Controllers\Employer\EmployerApplicationController;
 use App\Http\Controllers\Employer\EmployerAppealController;
+use App\Http\Controllers\Candidate\JobFeedController;
+use App\Http\Controllers\Candidate\JobApplicationController;
+use App\Http\Controllers\Candidate\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
@@ -92,4 +93,24 @@ Route::middleware(['auth', 'role:Employer'])
         // ML False Positive Appeals Engine
         Route::get('/jobs/{job}/appeal', [EmployerAppealController::class, 'create'])->name('appeals.create');
         Route::post('/jobs/{job}/appeal', [EmployerAppealController::class, 'store'])->name('appeals.store');
+
+        Route::get('/profile', [App\Http\Controllers\Employer\ProfileController::class, 'edit'])->name('employer.profile.edit');
+    Route::post('/profile', [App\Http\Controllers\Employer\ProfileController::class, 'update'])->name('employer.profile.update');
+});
+
+
+
+
+Route::get('/', [JobFeedController::class, 'home'])->name('home');
+Route::get('/jobs', [JobFeedController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{job}', [JobFeedController::class, 'show'])->name('jobs.show');
+Route::view('/about-us', 'public.about')->name('about');
+Route::view('/contact-us', 'public.contact')->name('contact');
+// Protected Candidate Actions (Requires login, role check optional or standard auth)
+Route::middleware(['auth'])->group(function () {
+    Route::post('/jobs/{job}/apply', [JobApplicationController::class, 'store'])->name('jobs.apply');
+    Route::get('/my-applications', [JobApplicationController::class, 'index'])->name('candidate.applications');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });

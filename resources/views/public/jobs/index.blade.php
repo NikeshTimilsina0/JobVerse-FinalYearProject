@@ -1,0 +1,81 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="bg-white border-bottom py-3">
+    <div class="container">
+        <form action="{{ route('jobs.index') }}" method="GET" class="row g-2">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-search"></i></span>
+                    <input type="text" name="search" class="form-control border-start-0" value="{{ request('search') }}" placeholder="Job title, keywords, or skills">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-muted border-end-0"><i class="bi bi-geo-alt"></i></span>
+                    <input type="text" name="location" class="form-control border-start-0" value="{{ request('location') }}" placeholder="City, district, or region">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select name="work_setting" class="form-select">
+                    <option value="">All Work Settings</option>
+                    <option value="Onsite" {{ request('work_setting') == 'Onsite' ? 'selected' : '' }}>Onsite</option>
+                    <option value="Remote" {{ request('work_setting') == 'Remote' ? 'selected' : '' }}>Remote</option>
+                    <option value="Hybrid" {{ request('work_setting') == 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary fw-bold">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div class="d-flex flex-column gap-3">
+                @forelse($jobs as $index => $feedJob)
+                    <div class="card bg-white border rounded shadow-sm p-3 job-item-card {{ $index === 0 ? 'border-primary border-2' : '' }}" style="cursor: pointer;" onclick="window.location='{{ route('jobs.show', $feedJob->id) }}'">
+                        <div class="d-flex justify-content-between mb-1">
+                            <h3 class="h5 fw-bold text-dark mb-0">{{ $feedJob->title }}</h3>
+                        </div>
+                        <p class="text-secondary small mb-2"><i class="bi bi-geo-alt"></i> {{ $feedJob->location ?? 'Nepal (Remote)' }}</p>
+                        
+                        <div class="mb-2">
+                            <span class="badge bg-light text-dark border small me-1">{{ $feedJob->work_setting }}</span>
+                            <span class="badge bg-primary-subtle text-primary small fw-semibold">{{ $feedJob->salary_range ?? 'Negotiable' }}</span>
+                        </div>
+
+                        <p class="text-muted small mb-0 text-truncate-3">{{ Str::limit($feedJob->description, 140) }}</p>
+                        <span class="text-muted fs-7 d-block mt-2">{{ $feedJob->created_at->diffForHumans() }}</span>
+                    </div>
+                @empty
+                    <div class="text-center py-5 bg-white border rounded text-muted small">No vacancies matched your active filter parameters.</div>
+                @endforelse
+
+                <div class="mt-2">
+                    {{ $jobs->links() }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 d-none d-md-block">
+            @if($jobs->count() > 0)
+                <div class="card bg-white border rounded shadow-sm p-4 sticky-top" style="top: 90px;">
+                    <h2 class="h4 fw-bold text-dark mb-1">{{ $jobs[0]->title }}</h2>
+                    <p class="text-muted small mb-3"><i class="bi bi-geo-alt"></i> {{ $jobs[0]->location ?? 'Specified Base' }} &bull; {{ $jobs[0]->work_setting }}</p>
+                    <hr>
+                    <h4 class="h6 fw-bold text-dark text-uppercase tracking-wide mb-2">Description Snapshot</h4>
+                    <p class="text-secondary small mb-4" style="white-space: pre-line;">{{ Str::limit($jobs[0]->description, 400) }}</p>
+                    <a href="{{ route('jobs.show', $jobs[0]->id) }}" class="btn btn-primary fw-bold px-4 shadow-sm">View Full Specification Interface &rarr;</a>
+                </div>
+            @else
+                <div class="card bg-light border border-dashed rounded h-100 d-flex align-items-center justify-content-center text-muted p-5">
+                    Select an entry from the tracking feed on the left to review processing telemetry parameters.
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+@endsection
