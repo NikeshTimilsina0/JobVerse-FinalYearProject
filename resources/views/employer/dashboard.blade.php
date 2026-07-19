@@ -3,33 +3,38 @@
 @section('content')
 <div class="container py-5">
     <!-- Top Greeting Header -->
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center border-bottom pb-4 mb-4" style="border-bottom-color: #7B2FBE; border-bottom-width: 3px;">
         <div>
             <h1 class="fw-bold text-dark mb-1">Employer Dashboard</h1>
             <p class="text-secondary mb-0">Monitor telemetry performance, screening workflows, and model evaluations.</p>
         </div>
-        <a href="{{ route('employer.jobs.create') }}" class="btn btn-primary fw-bold px-4 py-2 shadow-sm"><i class="bi bi-plus-lg me-1"></i> Post a New Job</a>
+        <a href="{{ route('employer.jobs.create') }}" class="btn fw-bold px-4 py-2 shadow-sm" 
+           style="background-color: #7B2FBE; border-color: #7B2FBE; color: #ffffff;"
+           onmouseover="this.style.backgroundColor='#5B1A8A'; this.style.borderColor='#5B1A8A';" 
+           onmouseout="this.style.backgroundColor='#7B2FBE'; this.style.borderColor='#7B2FBE';">
+           <i class="bi bi-plus-lg me-1"></i> Post a New Job
+        </a>
     </div>
 
     <!-- Analytics Cards Row -->
     <div class="row g-3 mb-5">
         <div class="col-md-4">
-            <div class="card bg-white border rounded shadow-sm p-4">
-                <div class="text-primary fs-3 mb-2"><i class="bi bi-briefcase-fill"></i></div>
+            <div class="card bg-white border rounded shadow-sm p-4" style="border-color: #7B2FBE !important;">
+                <div class="fs-3 mb-2" style="color: #7B2FBE;"><i class="bi bi-briefcase-fill"></i></div>
                 <h3 class="text-muted h6 fw-bold text-uppercase mb-1">Total Job Postings</h3>
                 <p class="display-6 fw-bold text-dark mb-0">{{ $stats['total_jobs'] }}</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-white border rounded shadow-sm p-4">
-                <div class="text-warning fs-3 mb-2"><i class="bi bi-people-fill"></i></div>
+            <div class="card bg-white border rounded shadow-sm p-4" style="border-color: #7B2FBE !important;">
+                <div class="fs-3 mb-2" style="color: #7B2FBE;"><i class="bi bi-people-fill"></i></div>
                 <h3 class="text-muted h6 fw-bold text-uppercase mb-1">Pending Review Apps</h3>
                 <p class="display-6 fw-bold text-dark mb-0">{{ $stats['active_apps'] }}</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-white border rounded shadow-sm p-4">
-                <div class="text-danger fs-3 mb-2"><i class="bi bi-shield-exclamation"></i></div>
+            <div class="card bg-white border rounded shadow-sm p-4" style="border-color: #7B2FBE !important;">
+                <div class="fs-3 mb-2" style="color: #7B2FBE;"><i class="bi bi-shield-exclamation"></i></div>
                 <h3 class="text-muted h6 fw-bold text-uppercase mb-1">Flagged Suspicious</h3>
                 <p class="display-6 fw-bold text-dark mb-0">{{ $stats['flagged_jobs'] }}</p>
             </div>
@@ -39,10 +44,10 @@
     <!-- Overview Split Section Layout -->
     <div class="row g-4">
         <div class="col-lg-12">
-            <div class="card bg-white border rounded shadow-sm p-4">
-                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+            <div class="card bg-white border rounded shadow-sm p-4" style="border-color: #7B2FBE !important;">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3" style="border-bottom-color: #f0e6ff !important;">
                     <h2 class="h5 fw-bold mb-0 text-dark">Recent Vacancy Metrics</h2>
-                    <a href="{{ route('employer.jobs.index') }}" class="small text-decoration-none fw-semibold">View All Jobs &rarr;</a>
+                    <a href="{{ route('employer.jobs.index') }}" class="small text-decoration-none fw-semibold" style="color: #7B2FBE;" onmouseover="this.style.color='#5B1A8A';" onmouseout="this.style.color='#7B2FBE';">View All Jobs &rarr;</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -55,7 +60,7 @@
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                                                <tbody>
                             @forelse($recentJobs as $job)
                                 <tr>
                                     <td>
@@ -82,8 +87,10 @@
                                         @if($job->is_fraud)
                                             <a href="{{ route('employer.appeals.create', $job->id) }}" class="btn btn-sm btn-outline-danger fw-bold">Dispute</a>
                                         @else
-                                            <a href="{{ route('employer.applications.index') }}" class="btn btn-sm btn-outline-primary fw-semibold">Applicants</a>
-                                        @endif
+<a href="{{ route('employer.applications.index') }}" class="btn btn-sm fw-semibold" 
+                                               style="color: #7B2FBE; border-color: #7B2FBE; background: transparent;"
+                                               onmouseover="this.style.backgroundColor='#7B2FBE'; this.style.color='#ffffff';" 
+                                               onmouseout="this.style.backgroundColor='transparent'; this.style.color='#7B2FBE';">Applicants</a>                                        @endif
                                     </td>
                                 </tr>
                             @empty

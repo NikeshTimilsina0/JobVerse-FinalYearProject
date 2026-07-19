@@ -15,6 +15,7 @@ use App\Http\Controllers\Employer\EmployerAppealController;
 use App\Http\Controllers\Candidate\JobFeedController;
 use App\Http\Controllers\Candidate\JobApplicationController;
 use App\Http\Controllers\Candidate\ProfileController;
+use App\Http\Controllers\Employer\EmployerProfileController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -76,7 +77,7 @@ Route::middleware(['auth', 'role:Employer'])
     ->prefix('employer')
     ->name('employer.')
     ->group(function () {
-        
+
         // Command Center Terminal
         Route::get('/dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
 
@@ -94,9 +95,10 @@ Route::middleware(['auth', 'role:Employer'])
         Route::get('/jobs/{job}/appeal', [EmployerAppealController::class, 'create'])->name('appeals.create');
         Route::post('/jobs/{job}/appeal', [EmployerAppealController::class, 'store'])->name('appeals.store');
 
-        Route::get('/profile', [App\Http\Controllers\Employer\ProfileController::class, 'edit'])->name('employer.profile.edit');
-    Route::post('/profile', [App\Http\Controllers\Employer\ProfileController::class, 'update'])->name('employer.profile.update');
-});
+        // CLEANED UP PROFILE ROUTES (Removed redundant structural prefixes)
+        Route::get('/profile', [EmployerProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile', [EmployerProfileController::class, 'update'])->name('profile.update');
+    });
 
 
 

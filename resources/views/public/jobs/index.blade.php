@@ -25,7 +25,10 @@
                 </select>
             </div>
             <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-primary fw-bold">Search</button>
+                <button type="submit" class="btn fw-bold" 
+                        style="background-color: #7B2FBE; border-color: #7B2FBE; color: #ffffff;"
+                        onmouseover="this.style.backgroundColor='#5B1A8A'; this.style.borderColor='#5B1A8A';" 
+                        onmouseout="this.style.backgroundColor='#7B2FBE'; this.style.borderColor='#7B2FBE';">Search</button>
             </div>
         </form>
     </div>
@@ -36,7 +39,11 @@
         <div class="col-md-5">
             <div class="d-flex flex-column gap-3">
                 @forelse($jobs as $index => $feedJob)
-                    <div class="card bg-white border rounded shadow-sm p-3 job-item-card {{ $index === 0 ? 'border-primary border-2' : '' }}" style="cursor: pointer;" onclick="window.location='{{ route('jobs.show', $feedJob->id) }}'">
+                    <div class="card bg-white border rounded shadow-sm p-3 job-item-card {{ $index === 0 ? 'border-2' : '' }}" 
+                         style="cursor: pointer; {{ $index === 0 ? 'border-color: #7B2FBE;' : '' }}" 
+                         onmouseover="this.style.borderColor='#7B2FBE';" 
+                         onmouseout="this.style.borderColor='{{ $index === 0 ? '#7B2FBE' : '#dee2e6' }}';"
+                         onclick="window.location='{{ route('jobs.show', $feedJob->id) }}'">
                         <div class="d-flex justify-content-between mb-1">
                             <h3 class="h5 fw-bold text-dark mb-0">{{ $feedJob->title }}</h3>
                         </div>
@@ -44,7 +51,7 @@
                         
                         <div class="mb-2">
                             <span class="badge bg-light text-dark border small me-1">{{ $feedJob->work_setting }}</span>
-                            <span class="badge bg-primary-subtle text-primary small fw-semibold">{{ $feedJob->salary_range ?? 'Negotiable' }}</span>
+                            <span class="badge small fw-semibold" style="background-color: #f0e6ff; color: #5B1A8A;">{{ $feedJob->salary_range ?? 'Negotiable' }}</span>
                         </div>
 
                         <p class="text-muted small mb-0 text-truncate-3">{{ Str::limit($feedJob->description, 140) }}</p>
@@ -62,13 +69,16 @@
 
         <div class="col-md-7 d-none d-md-block">
             @if($jobs->count() > 0)
-                <div class="card bg-white border rounded shadow-sm p-4 sticky-top" style="top: 90px;">
+                <div class="card bg-white border rounded shadow-sm p-4 sticky-top" style="top: 90px; border-color: #7B2FBE !important;">
                     <h2 class="h4 fw-bold text-dark mb-1">{{ $jobs[0]->title }}</h2>
                     <p class="text-muted small mb-3"><i class="bi bi-geo-alt"></i> {{ $jobs[0]->location ?? 'Specified Base' }} &bull; {{ $jobs[0]->work_setting }}</p>
                     <hr>
                     <h4 class="h6 fw-bold text-dark text-uppercase tracking-wide mb-2">Description Snapshot</h4>
                     <p class="text-secondary small mb-4" style="white-space: pre-line;">{{ Str::limit($jobs[0]->description, 400) }}</p>
-                    <a href="{{ route('jobs.show', $jobs[0]->id) }}" class="btn btn-primary fw-bold px-4 shadow-sm">View Full Specification Interface &rarr;</a>
+                    <a href="{{ route('jobs.show', $jobs[0]->id) }}" class="btn fw-bold px-4 shadow-sm" 
+                       style="background-color: #7B2FBE; border-color: #7B2FBE; color: #ffffff;"
+                       onmouseover="this.style.backgroundColor='#5B1A8A'; this.style.borderColor='#5B1A8A';" 
+                       onmouseout="this.style.backgroundColor='#7B2FBE'; this.style.borderColor='#7B2FBE';">View Full Specification Interface &rarr;</a>
                 </div>
             @else
                 <div class="card bg-light border border-dashed rounded h-100 d-flex align-items-center justify-content-center text-muted p-5">

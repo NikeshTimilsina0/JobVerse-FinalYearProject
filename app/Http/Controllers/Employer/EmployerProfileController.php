@@ -37,7 +37,13 @@ class EmployerProfileController extends Controller
         ]);
 
         $data = $request->only([
-            'company_name', 'website_url', 'industry', 'company_size', 'phone', 'address', 'about'
+            'company_name',
+            'website_url',
+            'industry',
+            'company_size',
+            'phone',
+            'address',
+            'about'
         ]);
 
         if ($request->hasFile('company_logo')) {

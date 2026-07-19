@@ -9,7 +9,7 @@
             
             @if(session('success'))
                 <div class="alert alert-success border-0 shadow-sm mb-4 d-flex align-items-center" role="alert">
-                    <i class="bi bi-check-circle-fill fs-4 me-2"></i>
+                    <i class="bi bi-check-circle-fill fs-4 me-2" style="color: #7B2FBE;"></i>
                     <div>{{ session('success') }}</div>
                 </div>
             @endif
@@ -24,8 +24,8 @@
                 </div>
             @endif
 
-            <div class="card bg-white border rounded shadow-sm p-4 p-md-5">
-                <div class="border-bottom pb-3 mb-4">
+            <div class="card bg-white border rounded shadow-sm p-4 p-md-5" style="border-color: #7B2FBE;">
+                <div class="border-bottom pb-3 mb-4" style="border-bottom-color: #f0e6ff;">
                     <h1 class="h3 fw-bold text-dark mb-1">Create a job posting</h1>
                     <p class="text-muted small mb-0">Provide precise parameters. Your submission passes through real-time structural risk analysis pipelines.</p>
                 </div>
@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                             <label for="location" class="form-label fw-bold text-dark small text-uppercase tracking-wide">Location</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-geo-alt"></i></span>
+                                <span class="input-group-text bg-white border-end-0 text-muted" style="color: #7B2FBE;"><i class="bi bi-geo-alt"></i></span>
                                 <input type="text" class="form-control border-start-0 @error('location') is-invalid @enderror" id="location" name="location" value="{{ old('location') }}" placeholder="e.g. Kathmandu, Nepal" required>
                             </div>
                             @error('location') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
@@ -51,7 +51,7 @@
                         <div class="col-md-6">
                             <label for="salary_range" class="form-label fw-bold text-dark small text-uppercase tracking-wide">Salary Estimate</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-cash-stack"></i></span>
+                                <span class="input-group-text bg-white border-end-0 text-muted" style="color: #7B2FBE;"><i class="bi bi-cash-stack"></i></span>
                                 <input type="text" class="form-control border-start-0 @error('salary_range') is-invalid @enderror" id="salary_range" name="salary_range" value="{{ old('salary_range') }}" placeholder="e.g. NPR 80,000 - 120,000" required>
                             </div>
                             @error('salary_range') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
@@ -90,9 +90,12 @@
                         @error('requirements') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
 
-                    <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top">
-                        <a href="/" class="btn btn-link text-decoration-none text-secondary fw-semibold">Cancel</a>
-                        <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">Continue and Post</button>
+                    <div class="d-flex align-items-center justify-content-end gap-3 pt-3 border-top" style="border-top-color: #f0e6ff;">
+                        <a href="/" class="btn btn-link text-decoration-none fw-semibold" style="color: #7B2FBE;" onmouseover="this.style.color='#5B1A8A';" onmouseout="this.style.color='#7B2FBE';">Cancel</a>
+                        <button type="submit" class="btn px-4 py-2 fw-bold" 
+                                style="background-color: #7B2FBE; border-color: #7B2FBE; color: #ffffff;"
+                                onmouseover="this.style.backgroundColor='#5B1A8A'; this.style.borderColor='#5B1A8A';" 
+                                onmouseout="this.style.backgroundColor='#7B2FBE'; this.style.borderColor='#7B2FBE';">Continue and Post</button>
                     </div>
                 </form>
             </div>

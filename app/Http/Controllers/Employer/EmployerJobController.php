@@ -7,6 +7,7 @@ use App\Models\UserJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class EmployerJobController extends Controller
 {
@@ -59,7 +60,7 @@ class EmployerJobController extends Controller
                 if ($isFraud) { $isVisible = false; }
             }
         } catch (\Exception $e) {
-            // Background Flask Engine is offline or processing delay
+            Log::error('Fraud detection service error: ' . $e->getMessage());
         }
 
         UserJob::create([

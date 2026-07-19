@@ -11,73 +11,89 @@
 
     <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary fs-3" href="/">JobVerse</a>
+            <a class="navbar-brand fw-bold fs-3" style="color: #7B2FBE;" href="/">JobVerse</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Main Navigation Links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
-                    
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="/">Home</a>
+                        <a class="nav-link {{ Request::is('/') ? 'active fw-semibold' : '' }}" style="{{ Request::is('/') ? 'border-bottom: 3px solid #7B2FBE;' : '' }}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('jobs') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('jobs.index') }}">Find Jobs</a>
+                        <a class="nav-link {{ Request::is('jobs') ? 'active fw-semibold' : '' }}" style="{{ Request::is('jobs') ? 'border-bottom: 3px solid #7B2FBE;' : '' }}" href="{{ route('jobs.index') }}">Find Jobs</a>
                     </li>
-
-                    @hasrole('Employer')
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('employer/dashboard') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('employer/jobs*') && !Request::is('employer/jobs/create') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.jobs.index') }}">Your Jobs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::is('employer/applications*') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('employer.applications.index') }}">Applicants</a>
-                        </li>
-                    @endhasrole
-
-                    @auth
-                        @if(!auth()->user()->hasRole('Employer'))
-                            <li class="nav-item">
-                                <a class="nav-link {{ Request::is('my-applications') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('candidate.applications') }}">My Applications</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Request::is('profile*') ? 'active fw-semibold border-bottom border-primary border-3' : '' }}" href="{{ route('profile.edit') }}">My Profile</a>
-                            </li>
-                        @endif
-                    @endauth
-
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('about') }}">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
-                        </li>
-                    @endguest
-
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('about-us') ? 'active fw-semibold' : '' }}" style="{{ Request::is('about-us') ? 'border-bottom: 3px solid #7B2FBE;' : '' }}" href="{{ route('about') }}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('contact-us') ? 'active fw-semibold' : '' }}" style="{{ Request::is('contact-us') ? 'border-bottom: 3px solid #7B2FBE;' : '' }}" href="{{ route('contact') }}">Contact Us</a>
+                    </li>
                 </ul>
 
+                <!-- Right-Side Contextual Panel -->
                 <div class="d-flex gap-2 align-items-center">
                     @auth
-                        <span class="text-secondary small me-2">Hi, <strong>{{ Auth::user()->name }}</strong></span>
-                        
                         @hasrole('Employer')
-                            <a href="{{ route('employer.jobs.create') }}" class="btn btn-primary fw-semibold btn-sm px-3">Post a Job</a>
+                            <a href="{{ route('employer.jobs.create') }}" class="btn fw-semibold btn-sm px-3 me-2" style="background-color: #7B2FBE; border-color: #7B2FBE; color: #ffffff;">Post a Job</a>
                         @endhasrole
 
-                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-secondary fw-semibold btn-sm">Sign Out</button>
-                        </form>
+                        <!-- Context-Aware User Dropdown -->
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle text-secondary small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hi, <strong>{{ Auth::user()->name }}</strong>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2">
+                                
+                                <!-- Employer Specific Links -->
+                                @hasrole('Employer')
+                                    <li>
+                                        <a class="dropdown-item small {{ Request::is('employer/dashboard') ? 'fw-semibold text-white' : '' }}" style="{{ Request::is('employer/dashboard') ? 'background-color: #7B2FBE;' : '' }}" href="{{ route('employer.dashboard') }}">
+                                            <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item small {{ Request::is('employer/jobs*') ? 'fw-semibold text-white' : '' }}" style="{{ Request::is('employer/jobs*') ? 'background-color: #7B2FBE;' : '' }}" href="{{ route('employer.jobs.index') }}">
+                                            <i class="bi bi-briefcase me-2"></i>Your Jobs
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item small {{ Request::is('employer/profile') ? 'fw-semibold text-white' : '' }}" style="{{ Request::is('employer/profile') ? 'background-color: #7B2FBE;' : '' }}" href="{{ route('employer.profile.edit') }}">
+                                            <i class="bi bi-building me-2"></i>Company Profile
+                                        </a>
+                                    </li>
+                                @endhasrole
+
+                                <!-- Candidate Specific Links -->
+                                @if(!auth()->user()->hasRole('Employer'))
+                                    <li>
+                                        <a class="dropdown-item small {{ Request::is('profile') ? 'fw-semibold text-white' : '' }}" style="{{ Request::is('profile') ? 'background-color: #7B2FBE;' : '' }}" href="{{ route('profile.edit') }}">
+                                            <i class="bi bi-person me-2"></i>My Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item small {{ Request::is('my-applications') ? 'fw-semibold text-white' : '' }}" style="{{ Request::is('my-applications') ? 'background-color: #7B2FBE;' : '' }}" href="{{ route('candidate.applications') }}">
+                                            <i class="bi bi-file-earmark-text me-2"></i>My Applications
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST" class="px-2">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item small text-danger rounded">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Sign Out
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     @else
-                        <a href="/login" class="btn btn-outline-primary fw-semibold btn-sm">Sign in</a>
-                                            @hasrole('Employer')
-
-                        <a href="/register" class="btn btn-primary fw-semibold btn-sm">Employers / Post Job</a>
-                        @endhasrole
+                        <a href="/login" class="btn fw-semibold btn-sm" style="border: 1px solid #7B2FBE; color: #7B2FBE;">Sign in</a>
+                        <a href="/register" class="btn fw-semibold btn-sm" style="background-color: #7B2FBE; border-color: #7B2FBE; color: #ffffff;">Register</a>
                     @endauth
                 </div>
             </div>
