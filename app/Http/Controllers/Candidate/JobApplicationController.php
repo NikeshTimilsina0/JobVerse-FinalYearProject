@@ -50,7 +50,6 @@ class JobApplicationController extends Controller
             'job_id'       => $job->id,
             'seeker_id'    => Auth::id(),
             'cover_letter' => $request->cover_letter,
-            'status'       => 'Pending'
         ]);
 
         return redirect()->route('jobs.show', $job->id)->with('success', 'Application transmission complete! The employer has been notified.');

@@ -28,7 +28,7 @@
                             <td class="small fw-semibold text-secondary">{{ $app->userJob->salary_range ?? 'Undisclosed' }}</td>
                             <td class="small text-muted">{{ $app->created_at->format('M d, Y') }}</td>
                             <td>
-                                <span class="badge border @if($app->status === 'Pending') bg-warning-subtle text-warning border-warning-subtle @elif($app->status === 'Shortlisted') bg-success-subtle text-success border-success-subtle @else bg-danger-subtle text-danger border-danger-subtle @endif">
+                                <span class="badge border @if($app->status === 'applied') bg-warning-subtle text-warning border-warning-subtle @elif($app->status === 'Shortlisted') bg-success-subtle text-success border-success-subtle @else bg-danger-subtle text-danger border-danger-subtle @endif">
                                     {{ $app->status }}
                                 </span>
                             </td>

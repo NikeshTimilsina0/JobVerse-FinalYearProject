@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Panel</title>
-    
-    <!-- Google Font: Source Sans Pro -->
+@extends('layouts.app')
+@section('content')
+
+<div class="hold-transition register-page">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
-</head>
-<body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
             <a href="../../index2.html"><b>Admin</b>LTE</a>
@@ -84,5 +79,5 @@
 <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
-</body>
-</html>
+</div>
+@endsection

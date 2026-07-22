@@ -59,7 +59,6 @@ class JobFeedController extends Controller
             'cover_letter' => 'required|string|min:15',
         ]);
 
-        // Guard against duplicate application entries
         $exists = JobApplication::where('job_id', $job->id)
             ->where('seeker_id', Auth::id())
             ->exists();
@@ -68,11 +67,13 @@ class JobFeedController extends Controller
             return redirect()->back()->with('error', 'You have already applied to this vacancy.');
         }
 
+        // FIX: Removed 'Pending' string insertion which caused enum validation crash.
+        // The table default string attribute fallback handles mapping this to 'applied'.
         JobApplication::create([
             'job_id' => $job->id,
             'seeker_id' => Auth::id(),
             'cover_letter' => $request->cover_letter,
-            'status' => 'Pending',
+            // 'status' => 'applied' <-- You can explicitly pass this if preferred
         ]);
 
         return redirect()->route('jobs.index', ['selected' => $job->id])

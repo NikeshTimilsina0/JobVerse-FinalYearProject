@@ -6,7 +6,6 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Resolve path to your joblib artifact
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'real_job_fraud_detector.pkl')
 model = None
 
@@ -21,7 +20,6 @@ def load_model():
     global model
     if not os.path.exists(MODEL_PATH):
         raise FileNotFoundError(f"Model artifact not found at: {MODEL_PATH}")
-    # Using joblib matching your training exporter
     model = joblib.load(MODEL_PATH)
     print("Calibrated LightGBM pipeline successfully loaded into memory.")
 
